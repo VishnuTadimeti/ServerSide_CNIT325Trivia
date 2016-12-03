@@ -13,7 +13,7 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Database extends SQLiteOpenHelper {
+class Database extends SQLiteOpenHelper {
 
     private static final int databaseVersion = 2;
     private static final String databaseName = "trivia";
@@ -23,7 +23,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String leaderboardName = "";
     private static final String leaderboardScore = "";
 
-    public Database(Context context) {
+    Database(Context context) {
         super(context, databaseName, null, databaseVersion);
     }
 
@@ -40,7 +40,7 @@ public class Database extends SQLiteOpenHelper {
         onCreate(sqldb);
     }
 
-    public void addRecord(int score, String username) {
+    void addRecord(int score, String username) {
         String uname = "'" + username + "'";
         this.getWritableDatabase().execSQL("insert into " + leaderboardTable + " values (" + score + ", " + uname + ")");
     }
@@ -57,13 +57,13 @@ public class Database extends SQLiteOpenHelper {
                 }
                 Log.d("Database: ", test);
                 cur.moveToNext();
-
             }
         }
+        cur.close();
     }
 
-    public JSONArray getResults() {
-        Cursor cursor = this.getReadableDatabase().rawQuery("select * from leaderboard", new String [] {});
+    JSONArray getResults() {
+        Cursor cursor = this.getReadableDatabase().rawQuery("select * from leaderboard order by number desc", new String [] {});
         JSONArray resultSet = new JSONArray();
 
         cursor.moveToFirst();

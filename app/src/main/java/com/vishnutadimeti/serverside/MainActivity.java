@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +28,10 @@ public class MainActivity extends Activity {
         datalist.add("foo");
         datalist.add("bar");
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
-                datalist );
+                datalist);
 
         listView.setAdapter(arrayAdapter);
     }
