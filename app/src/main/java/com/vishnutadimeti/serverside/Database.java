@@ -15,11 +15,9 @@ import org.json.JSONObject;
 
 class Database extends SQLiteOpenHelper {
 
-    private static final int databaseVersion = 2;
+    private static final int databaseVersion = 3;
     private static final String databaseName = "trivia";
     private static final String leaderboardTable = "leaderboard";
-    //private static final String ID= "";
-    //private static final String leaderboadCategory = "";
     private static final String leaderboardName = "";
     private static final String leaderboardScore = "";
 
