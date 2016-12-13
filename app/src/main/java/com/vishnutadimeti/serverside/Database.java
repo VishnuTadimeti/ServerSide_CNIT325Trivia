@@ -13,6 +13,8 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+// Initializing a new SQL Database
+
 class Database extends SQLiteOpenHelper {
 
     private static final int databaseVersion = 3;
@@ -25,6 +27,8 @@ class Database extends SQLiteOpenHelper {
         super(context, databaseName, null, databaseVersion);
     }
 
+    // Method for creating a new SQL Table
+    
     @Override
     public void onCreate(SQLiteDatabase sqldb) {
         String createTable = "create table " + leaderboardTable + "(" +
@@ -32,17 +36,23 @@ class Database extends SQLiteOpenHelper {
         sqldb.execSQL(createTable);
     }
 
+    // Method to drop the table
+    
     @Override
     public void onUpgrade(SQLiteDatabase sqldb, int i, int i1) {
         sqldb.execSQL("DROP TABLE IF EXISTS "+ leaderboardTable);
         onCreate(sqldb);
     }
+    
+    // Method to add a record to the table
 
     void addRecord(int score, String username) {
         String uname = "'" + username + "'";
         this.getWritableDatabase().execSQL("insert into " + leaderboardTable + " values (" + score + ", " + uname + ")");
     }
 
+    // Method to read the Database using Cursor
+    
     public void getRecord() {
         Cursor cur = this.getWritableDatabase().rawQuery("select * from leaderboard", new String [] {});
         if (cur.moveToFirst()) {
@@ -60,6 +70,8 @@ class Database extends SQLiteOpenHelper {
         cur.close();
     }
 
+    // JSON Array to get the results from the database, to send data to the client. 
+    
     JSONArray getResults() {
         Cursor cursor = this.getReadableDatabase().rawQuery("select * from leaderboard order by number desc", new String [] {});
         JSONArray resultSet = new JSONArray();
