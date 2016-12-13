@@ -20,6 +20,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.Scanner;
 
+// This is the code for the Server
+
 class Server {
     private MainActivity activity;
     private ServerSocket serverSocket;
@@ -53,12 +55,15 @@ class Server {
             try {
                 serverSocket = new ServerSocket(socketServerPORT);
 
+                // Initializing Socket
+                
                 while (true) {
                     Socket socket = serverSocket.accept();
                     InputStream inStream = socket.getInputStream();
                     Scanner in = new Scanner(inStream);
-
+                    
                     if (in.hasNextLine()) {
+                        // Using Scanner to read data sent by the Client (i.e Username and Highscore)
                         String input = in.nextLine();
                         int points = Integer.parseInt(input.substring(0,2).trim());
                         String uname = input.substring(2, input.length());
@@ -66,10 +71,12 @@ class Server {
                         if (input.equals("request")) {
 
                         } else {
+                            // Adding records sent from the Client (Username and Highscore) to the Database
                             Database db = new Database(activity.getApplicationContext());
                             db.addRecord(points, uname);
                             try (OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8))
                             {
+                                // Sending Username and Highscore from the Database to Client for the Leaderboard
                                 out.write(db.getResults().toString());
                                 out.flush();
                             }
@@ -86,6 +93,8 @@ class Server {
 
     }
 
+    // Method to return the IP Address as a String 
+    
     public String getIpAddress() {
         String ip = "";
         try {
