@@ -22,17 +22,15 @@ public class MainActivity extends Activity {
         server = new Server(this);
         infoip.setText(server.getIpAddress()+":"+server.getPort());
 
+        // Test Code
         listView = (ListView) findViewById(R.id.list);
-
         List<String> datalist = new ArrayList<>();
         datalist.add("foo");
         datalist.add("bar");
-
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
                 datalist);
-
         listView.setAdapter(arrayAdapter);
     }
 
